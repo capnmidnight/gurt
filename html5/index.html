@@ -16,13 +16,15 @@
         display:none;
       }
     </style>
+    <script type="text/javascript">
+var WIDTH = 1024, HEIGHT = 768, DEPTH = 10;
+var HALF_WIDTH = WIDTH/2, HALF_HEIGHT = HEIGHT/2;
+    </script>
     <script type="text/javascript" src="lib.js"></script>
     <script type="text/javascript" src="mob.js"></script>
     <script type="text/javascript" src="ship.js"></script>
     <script type="text/javascript" src="stars.js"></script>
     <script type="text/javascript">
-var WIDTH = 1024, HEIGHT = 768;
-var HALF_WIDTH = WIDTH/2, HALF_HEIGHT = HEIGHT/2;
 var canv1, canv2, front, back;
 var targetT = Math.floor(1000/60);
 var da = Math.PI / 50000, spd = 0.006, drag = 0.01;
@@ -38,7 +40,6 @@ function init(){
   front = canv1.getContext("2d");
   back = canv2.getContext("2d");
   back.globalCompositeOperation = "lighter";
-  makeStars(WIDTH * 4, HEIGHT * 4, 200);
   lib.keyHandler.setup(document);
   lib.pump.start(update, draw, targetT);
 }
@@ -95,10 +96,7 @@ function eye(side, color){
   back.translate(HALF_WIDTH, HALF_HEIGHT);
   back.rotate(-half_angle);
   back.translate(-ship.x, -ship.y);
-  for(i = 0; i < star.length; ++i){
-    back.strokeStyle = color + (20 - star[i].z) / 30 + ")";
-    star[i].draw(back, anaglyph_x, anaglyph_y);
-  }
+  drawStars(back, ship.x, ship.y, color, anaglyph_x, anaglyph_y);
   back.strokeStyle = color + "1)";
   for(i = 0; i < numBullets; ++i){
     if(bullet[i].ttl > 0){

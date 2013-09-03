@@ -19,6 +19,12 @@ Mobile.prototype.init = function(x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dd
   this.dda = dda || 0;
 };
 
+Mobile.prototype.moveTo = function(x, y, z){
+  this.x = x;
+  this.y = y;
+  this.z = z;
+};
+
 Mobile.prototype.update = function(dt){
   this.dx += (this.ddx - this.drag * this.dx) * dt;
   this.dy += (this.ddy - this.drag * this.dy) * dt;
