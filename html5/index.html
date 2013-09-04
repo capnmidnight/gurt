@@ -24,11 +24,12 @@ var HALF_WIDTH = WIDTH/2, HALF_HEIGHT = HEIGHT/2;
     <script type="text/javascript" src="mob.js"></script>
     <script type="text/javascript" src="ship.js"></script>
     <script type="text/javascript" src="stars.js"></script>
+    <script type="text/javascript" src="rock.js"></script>
     <script type="text/javascript">
 var canv1, canv2, front, back;
 var targetT = Math.floor(1000/60);
 var da = Math.PI / 50000, spd = 0.006, drag = 0.01;
-var anaglyph = false;
+var anaglyph = true;
 var enemyX = WIDTH/2, enemyY = HEIGHT/2, dx, dy;
 var half_angle, anaglyph_x, anaglyph_y, i, j;
 
@@ -40,6 +41,7 @@ function init(){
   front = canv1.getContext("2d");
   back = canv2.getContext("2d");
   back.globalCompositeOperation = "lighter";
+  makeRocks();
   lib.keyHandler.setup(document);
   lib.pump.start(update, draw, targetT);
 }
@@ -73,6 +75,9 @@ function update(dt){
       }
     }
   }
+  for(i = 0; i < numRocks; ++i){
+    rock[i].update(dt);
+  }
 }
 
 function draw(){
@@ -105,6 +110,9 @@ function eye(side, color){
     if(bullet[i].ttl > 0){
       bullet[i].draw(back, anaglyph_x, anaglyph_y);
     }
+  }
+  for(i = 0; i < numRocks; ++i){
+    rock[i].draw(back, anaglyph_x, anaglyph_y);
   }
   ship.draw(back, anaglyph_x, anaglyph_y);
   for(i = 0; i < numPings; ++i){
