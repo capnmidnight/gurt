@@ -1,4 +1,4 @@
-function makeCanvas(id, width, height) {
+function makeCanvas(id: string, width: number, height: number) {
     var canv = document.createElement("canvas");
     canv.id = id;
     canv.width = width;
@@ -8,15 +8,26 @@ function makeCanvas(id, width, height) {
     return canv;
 }
 
-var RANDO = (function () {
-    function RANDO() {
+class RANDO {
+    A: number;
+    M: number;
+    Q: number;
+    R: number;
+    oneOverM: number;
+    seed: number;
+    hi: number;
+    lo: number;
+    test: number;
+
+    constructor() {
         this.A = 48271;
         this.M = 2147483647;
         this.Q = this.M / this.A;
         this.R = this.M % this.A;
         this.oneOverM = 1.0 / this.M;
     }
-    RANDO.prototype.next = function () {
+
+    next() {
         this.hi = this.seed / this.Q;
         this.lo = this.seed % this.Q;
         this.test = this.A * this.lo - this.R * this.hi;
@@ -26,13 +37,12 @@ var RANDO = (function () {
             this.seed = this.test + this.M;
         }
         return (this.seed * this.oneOverM);
-    };
+    }
 
-    RANDO.prototype.reseed = function (x, y) {
+    reseed(x, y) {
         this.seed = 2345678901 + x * 0xFFFFFF + y * 0xFFFF;
-    };
-    return RANDO;
-})();
+    }
+}
 
 var lib = {
     keyHandler: {
@@ -56,9 +66,11 @@ var lib = {
             obj.addEventListener("keydown", lib.keyHandler.keydown, false);
             obj.addEventListener("keyup", lib.keyHandler.keyup, false);
         },
-        add: function (code, cooldown, f) {
+        add: function (code: number, cooldown: number, f) {
             lib.keyHandler.keyfuncs[lib.keyHandler.keyfuncs.length] = function (dt) {
-                if (lib.keyHandler.keys[code] && (!lib.keyHandler.keycool[code] || lib.keyHandler.keycool[code] <= 0)) {
+                if (lib.keyHandler.keys[code]
+                        && (!lib.keyHandler.keycool[code]
+                        || lib.keyHandler.keycool[code] <= 0)) {
                     f(dt);
                     lib.keyHandler.keycool[code] = cooldown;
                 } else if (lib.keyHandler.keycool[code] > 0) {
@@ -79,8 +91,12 @@ var lib = {
             var tick = function () {
                 lib.pump.curTime = Date.now();
                 lib.pump.dTime = lib.pump.curTime - lib.pump.lastTime;
-                for (lib.pump.accumTime += lib.pump.dTime; lib.pump.accumTime > targetTime; lib.pump.accumTime -= targetTime) {
-                    for (lib.pump.i = 0; lib.pump.i < lib.keyHandler.keyfuncs.length; lib.pump.i++) {
+                for (lib.pump.accumTime += lib.pump.dTime;
+                     lib.pump.accumTime > targetTime;
+                     lib.pump.accumTime -= targetTime) {
+                    for (lib.pump.i = 0;
+                         lib.pump.i < lib.keyHandler.keyfuncs.length;
+                         lib.pump.i++) {
                         lib.keyHandler.keyfuncs[lib.pump.i](targetTime);
                     }
                     updateFunc(targetTime);
@@ -93,4 +109,3 @@ var lib = {
         }
     }
 };
-//# sourceMappingURL=lib.js.map

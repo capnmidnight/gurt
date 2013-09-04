@@ -1,0 +1,6 @@
+d:\sean\projects\gurt\html5\bin\html5.dll.config
+d:\sean\projects\gurt\html5\bin\html5.dll
+d:\sean\projects\gurt\html5\bin\html5.pdb
+d:\sean\projects\gurt\html5\obj\Debug\html5.csprojResolveAssemblyReference.cache
+d:\sean\projects\gurt\html5\obj\Debug\html5.dll
+d:\sean\projects\gurt\html5\obj\Debug\html5.pdb
