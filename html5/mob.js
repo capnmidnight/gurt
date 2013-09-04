@@ -19,12 +19,6 @@ Mobile.prototype.init = function(x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dd
   this.dda = dda || 0;
 };
 
-Mobile.prototype.moveTo = function(x, y, z){
-  this.x = x;
-  this.y = y;
-  this.z = z;
-};
-
 Mobile.prototype.update = function(dt){
   this.dx += (this.ddx - this.drag * this.dx) * dt;
   this.dy += (this.ddy - this.drag * this.dy) * dt;
@@ -45,17 +39,11 @@ Mobile.prototype.update = function(dt){
       this.ttl = 0;
   }
 };
-var px, py, hx, hy, d;
+var px, py, hx, hy, d, pa;
 Mobile.prototype.draw = function(g2d, anaglyph_x, analgyph_y){
   g2d.save();
-  px = 0, py = 0;
-  if(anaglyph_x || anaglyph_y){
-    hx = Math.abs(anaglyph_x);
-    hy = Math.abs(anaglyph_y);
-    d = ((this.x - ship.x) * hx + (this.y - ship.y) * hy) / this.z;
-    px = hx * d;
-    py = hy * d;
-  }
+  px = (this.x - ship.x) / this.z;
+  py = (this.y - ship.y) / this.z;
   g2d.translate(
     this.x + px + anaglyph_x * this.z, 
     this.y + py + anaglyph_y * this.z);
@@ -64,7 +52,8 @@ Mobile.prototype.draw = function(g2d, anaglyph_x, analgyph_y){
   g2d.beginPath();
   g2d.moveTo(this.poly[0][0], this.poly[0][1]);
   for(var i = 1; i < this.poly.length; ++i)
-    g2d.lineTo(this.poly[i][0], this.poly[i][1]);
+    g2d.lineTo(this.poly[i % this.poly.length][0], this.poly[i % this.poly.length][1]);
+  g2d.closePath();
   g2d.stroke();
   g2d.restore();
 };
