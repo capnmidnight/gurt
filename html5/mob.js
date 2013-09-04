@@ -1,22 +1,26 @@
-function Mobile(poly, x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dda){
+function Mobile(poly, x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dda, mass){
   this.poly = poly;
-  this.init(x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dda);
+  this.init(x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dda, mass);
 }
 
-Mobile.prototype.init = function(x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dda){
+Mobile.prototype.init = function(x, y, z, a, drag, ttl, dx, dy, da, ddx, ddy, dda, mass){
   this.x = x || 0;
   this.y = y || 0;
   this.z = z || 0;
   this.scale = 1 - this.z/64;
   this.a = a || 0;
   this.drag = drag || 0;
-  this.ttl = ttl || -1;
+  if(ttl === null || ttl === undefined)
+    this.ttl = -1;
+  else
+    this.ttl = ttl;
   this.dx = dx || 0;
   this.dy = dy || 0;
   this.da = da || 0;
   this.ddx = ddx || 0;
   this.ddy = ddy || 0;
   this.dda = dda || 0;
+  this.mass = mass || 0;
 };
 
 Mobile.prototype.update = function(dt){

@@ -22,20 +22,20 @@ lib.keyHandler.add(68, 0, function(){
 });
 
 lib.keyHandler.add(87, 0, function(){
-  ship.ddx = lib.cos(ship.a) * spd;
-  ship.ddy = lib.sin(ship.a) * spd;
+  ship.ddx = Math.cos(ship.a) * spd;
+  ship.ddy = Math.sin(ship.a) * spd;
 });
 
 lib.keyHandler.add(83, 0, function(){
-  ship.ddx = -lib.cos(ship.a) * spd;
-  ship.ddy = -lib.sin(ship.a) * spd;
+  ship.ddx = -Math.cos(ship.a) * spd;
+  ship.ddy = -Math.sin(ship.a) * spd;
 });
 
 lib.keyHandler.add(32, 250, function(){
   if(bullet[curBullet].ttl <= 0){
     bullet[curBullet].init(ship.x, ship.y, 10, 
       ship.a, 0, MAX_BULLET_AGE, 0, 0, 0, 
-      BULLET_SPEED * lib.cos(ship.a), BULLET_SPEED * lib.sin(ship.a), 1);
+      BULLET_SPEED * Math.cos(ship.a), BULLET_SPEED * Math.sin(ship.a), 1);
     curBullet = (curBullet + 1) % numBullets;
   }
 });

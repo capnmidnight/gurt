@@ -5,28 +5,7 @@ if (document && !document.addEventListener) {
     };
 }
 
-var lib = {
-    cos_vals: [],
-    sin_vals: [],
-    cos: function(a){
-        a = Math.round(a * 1800 / Math.PI);
-        while(a < 0) a += lib.cos_vals.length;
-        while(a >= lib.cos_vals.length) a -= lib.cos_vals.length;
-        return lib.cos_vals[a];
-    },
-    sin: function(a){
-        a = Math.round(a * 1800 / Math.PI);
-        while(a < 0) a += lib.sin_vals.length;
-        while(a >= lib.sin_vals.length) a -= lib.sin_vals.length;
-        return lib.sin_vals[a];
-    }
-};
-
-for(var i = 0; i < 3600; ++i){
-    lib.cos_vals[i] = Math.cos(i * Math.PI / 1800);
-    lib.sin_vals[i] = Math.sin(i * Math.PI / 1800);
-}
-
+var lib = {};
 
 function makeCanvas(id, width, height) {
     "use strict";
@@ -91,8 +70,12 @@ lib.pump = {
         var tick = function () {
             lib.pump.curTime = Date.now();
             lib.pump.dTime = lib.pump.curTime - lib.pump.lastTime;
-            for (lib.pump.accumTime += lib.pump.dTime; lib.pump.accumTime > targetTime; lib.pump.accumTime -= targetTime) {
-                for (lib.pump.i = 0; lib.pump.i < lib.keyHandler.keyfuncs.length; lib.pump.i++) {
+            for (lib.pump.accumTime += lib.pump.dTime;
+                 lib.pump.accumTime > targetTime;
+                 lib.pump.accumTime -= targetTime) {
+                for (lib.pump.i = 0;
+                     lib.pump.i < lib.keyHandler.keyfuncs.length;
+                     lib.pump.i++) {
                     lib.keyHandler.keyfuncs[lib.pump.i](targetTime);
                 }
                 updateFunc(targetTime);
