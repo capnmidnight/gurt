@@ -5,12 +5,17 @@
 /// <reference path="ship.ts" />
 
 module Gurt{
-    var canv1, canv2, front, back;
-    var targetT = Math.floor(1000 / 60);
-    var drag = 0.01;
-    var anaglyph = true;
-    var enemyX = Gurt.WIDTH / 2, enemyY = Gurt.HEIGHT / 2, dx, dy;
-    var half_angle, anaglyph_x, anaglyph_y, i, j;
+    var canv1: HTMLCanvasElement;
+    var canv2: HTMLCanvasElement;
+    var front: CanvasRenderingContext2D;
+    var back: CanvasRenderingContext2D;
+    var targetT: number = Math.floor(1000 / 60);
+    var drag: number = 0.01;
+    var anaglyph: boolean = true;
+    var enemyX: number = Gurt.WIDTH / 2;
+    var enemyY:number = Gurt.HEIGHT / 2;
+    var dx:number, dy:number;
+    var half_angle:number, anaglyph_x:number, anaglyph_y:number, i:number, j:number;
 
     export function init() {
         canv1 = makeCanvas("front-buffer", Gurt.WIDTH, Gurt.HEIGHT);

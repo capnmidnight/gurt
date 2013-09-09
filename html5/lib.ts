@@ -86,7 +86,7 @@ var lib = {
         accumTime: 0,
         timer: null,
         i: 0,
-        start: function (updateFunc, drawFunc, targetTime) {
+        start: function (updateFunc: (dt: number) => void, drawFunc:() => void, targetTime: number) {
             lib.pump.lastTime = Date.now();
             var tick = function () {
                 lib.pump.curTime = Date.now();
